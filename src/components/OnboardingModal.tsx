@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
@@ -46,15 +47,18 @@ const OnboardingModal: React.FC = () => {
   ];
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center bg-opacity-30">
       <div className="bg-white p-6 rounded shadow-lg w-[90%] max-w-md space-y-6 min-h-2/4">
-        <h1 className='text-center text-2xl pb-6 text-[#1e3a8a]'>Quixess Onboarding Process</h1>
+        <h1 className="text-center text-2xl pb-6 text-[#1e3a8a]">Quixess Onboarding Process</h1>
+
         <div className="flex">
-          {['Personal Info', 'Account Setup', ' Preferences'].map((label, index) => (
+          {['Personal Info', 'Account Setup', 'Preferences'].map((label, index) => (
             <div
               key={index}
-              className={`w-full px-3 py-1 cursor-pointer border-b-2 ${
-                step === index ? 'border-[#1e3a8a] text-[#1e3a8a]' : 'border-gray-200 text-gray-700'
+              className={`w-full px-3 py-1 cursor-pointer border-b-2 text-center transition-all duration-300 ${
+                step === index
+                  ? 'border-[#1e3a8a] text-[#1e3a8a] font-semibold'
+                  : 'border-gray-200 text-gray-700'
               }`}
               onClick={() => setStep(index)}
             >
@@ -63,9 +67,19 @@ const OnboardingModal: React.FC = () => {
           ))}
         </div>
 
-        <div>{steps[step]}</div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.3 }}
+          >
+            {steps[step]}
+          </motion.div>
+        </AnimatePresence>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between pt-4">
           <button
             onClick={() => setStep((prev) => Math.max(prev - 1, 0))}
             disabled={step === 0}
