@@ -57,7 +57,7 @@ const OnboardingModal: React.FC = () => {
               key={index}
               className={`w-full px-3 py-1 cursor-pointer border-b-2 text-center transition-all duration-300 ${
                 step === index
-                  ? 'border-[#1e3a8a] text-[#1e3a8a] font-semibold'
+                  ? 'border-[#1e3a8a] text-[#1e3a8a]'
                   : 'border-gray-200 text-gray-700'
               }`}
               onClick={() => setStep(index)}
